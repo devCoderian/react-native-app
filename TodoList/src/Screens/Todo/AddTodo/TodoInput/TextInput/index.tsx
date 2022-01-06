@@ -14,8 +14,17 @@ interface Props {
   hideTodoInput: () => void;
 }
 
+
 const TextInput = ({ hideTodoInput }: Props) => {
+
+  //useContext 초기값을 우리가 만든 TodoListContext를 전달하고, 
+  //전역 데이터인 할일 리스트에 데이터를 추가하기 위해 addTodoList 함수를 할당받음
   const { addTodoList } = useContext<ITodoListContext>(TodoListContext);
+  
+  //onSubmitEditing
+  //키보드의 "완료" 버튼 클릭시 호출되는 TextInput의 함수로서,
+  //이 함수에서 Context에 데이터를 저장하고
+  //TodoInput컴포넌트를 숨기도록 hideTodoInput 함수 호출
   return (
     <Input
       autoFocus={true}
