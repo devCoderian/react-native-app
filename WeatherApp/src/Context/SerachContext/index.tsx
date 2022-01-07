@@ -12,7 +12,7 @@ interface Props{
 const SearchContextProvider = ({children}: Props) => {
     
     const [text, setText] = useState('seoul')
-
+    console.log(text);
     const searchText = (txt: string):void => {
         setText(txt);
     }
