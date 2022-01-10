@@ -10,3 +10,4 @@ interface IUserContext{
     getUserInfo: () => void; //사용자 정보를 가지고 올 수 있다.
     logout: () => void;
 }
+

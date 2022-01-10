@@ -10,7 +10,6 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -35,17 +34,18 @@ public class MainApplication extends Application implements ReactApplication {
         }
       };
 
-  @Override
-  public ReactNativeHost getReactNativeHost() {
-    return mReactNativeHost;
-  }
+        @Override
+        public ReactNativeHost getReactNativeHost() {
+          return mReactNativeHost;
+        }
 
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
-    initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
-  }
+        @Override
+        public void onCreate() {
+          super.onCreate();
+          SoLoader.init(this, /* native exopackage */ false);
+          initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+        }
+   
 
   /**
    * Loads Flipper in React Native templates. Call this in the onCreate method with something like

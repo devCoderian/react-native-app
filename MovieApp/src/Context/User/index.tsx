@@ -1,3 +1,80 @@
+import React, {createContext, useState, useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
+
+const defaultContext: IUserContext = {
+  isLoading: false,
+  userInfo: undefined,
+  login: (email: string, password: string) => {},
+  getUserInfo: () => {},
+  logout: () => {},
+};
+
+const UserContext = createContext(defaultContext);
+
+interface Props {
+  children: JSX.Element | Array<JSX.Element>;
+}
+
+const UserContextProvider = ({children}: Props) => {
+  const [userInfo, setUserInfo] = useState<IUserInfo | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const login = (email: string, password: string): void => {
+    // Use Eamil and Passowrd for login API
+    // Get token and UserInfo via Login API
+    AsyncStorage.setItem('token', 'save your token').then(() => {
+      setUserInfo({
+        name: 'dev-yakuza',
+        email: 'dev.yakuza@gamil.com',
+      });
+      setIsLoading(true);
+    });
+  };
+
+  const getUserInfo = (): void => {
+    AsyncStorage.getItem('token')
+      .then((value) => {
+        if (value) {
+          // Get UserInfo via UserInfo API
+          setUserInfo({
+            name: 'dev-yakuza',
+            email: 'dev.yakuza@gamil.com',
+          });
+        }
+        setIsLoading(true);
+      })
+      .catch(() => {
+        setUserInfo(undefined);
+        setIsLoading(true);
+      });
+  };
+
+  const logout = (): void => {
+    AsyncStorage.removeItem('token');
+    setUserInfo(undefined);
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  return (
+    <UserContext.Provider
+      value={{
+        isLoading,
+        userInfo,
+        login,
+        getUserInfo,
+        logout,
+      }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+export {UserContextProvider, UserContext};
+
+
+/*
 import React, { createContext, useEffect, useState } from 'react'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
@@ -27,8 +104,8 @@ const UserContextProvider = ({children}: Props) => {
     const login = (email: string, password: string): void => {
         AsyncStorage.setItem('token', 'save ypur token').then(() => {
             setUserInfo({
-                name: 'dev-yakuza',
-                email: 'fev.yakuza@gmail.com'
+                name: 'ian  ',
+                email: 'ian@naver.com'
             });
             setIsLoading(true);
         })   
@@ -39,8 +116,8 @@ const UserContextProvider = ({children}: Props) => {
         .then(value => {
             if(value){
                 setUserInfo({
-                    name:'dev-yakuza',
-                    email: 'dev.yakuza@gmail.com'
+                    name:'ian',
+                    email: 'ian@naver.com'
                 });
             }
             setIsLoading(true);
@@ -56,7 +133,7 @@ const UserContextProvider = ({children}: Props) => {
         setUserInfo(undefined);
     };
 
-    //로그인 여부를 체크하는 함수 
+    //useEffect를 사용하여 앱이 실행된 후 getUserInfo 함수를 사용해 로그인 여부를 체크 
     //실제 토큰 키의 체크는 진행 X, 토큰 키가 있다면 로그인한 상태라고 가정
     useEffect(()=> {
         getUserInfo();
@@ -64,22 +141,18 @@ const UserContextProvider = ({children}: Props) => {
 
     return(
         <UserContext.Provider
-            value = {{
-                isLoading,
-                userInfo,
-                login,
-                getUserInfo,
-                logout
-            }}>
-                {children}
-        </UserContext.Provider>
+        value={{
+          isLoading,
+          userInfo,
+          login,
+          getUserInfo,
+          logout,
+        }}>
+        {children}
+      </UserContext.Provider>
     )
 
-    return (
-        <div>
-            
-        </div>
-    )
 }
 
 export { UserContextProvider, UserContext }
+*/
